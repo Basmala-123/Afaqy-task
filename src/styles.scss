@@ -1,1 +1,60 @@
+@use '@angular/material' as mat;
+
+html {
+  @include mat.theme((
+    color: (
+      primary: mat.$azure-palette,
+      tertiary: mat.$blue-palette,
+    ),
+    typography: Roboto,
+    density: 0,
+  ));
+}
+
+body {
+  color-scheme: light;
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
+
+  margin: 0;
+}
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+#page-content-wrapper {
+  background-color: #f3f6f9;
+}
+
+.card {
+  border-radius: 12px;
+}
+
+.shadow-sm {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.04) !important;
+}
+
+.bg-success-subtle {
+  padding: 4px 8px;
+  border-radius: 10px;
+}
+.list-group-item {
+  transition: all 0.2s ease;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.list-group-item.active {
+  background-color: #f1f5f9; 
+  color: #2563eb ;
+}
+
+.list-group-item:hover:not(.active) {
+  background-color: #f8fafc;
+  color: #2563eb;
+}
+
+.fs-7 { font-size: 0.9rem; }
+.cursor-pointer { cursor: pointer; }

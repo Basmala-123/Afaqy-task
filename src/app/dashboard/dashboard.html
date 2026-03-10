@@ -1,0 +1,17 @@
+<main class="p-4 overflow-auto">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold m-0 h3">Dashboard</h2>
+    <button class="btn btn-primary px-4 rounded-pill fw-bold shadow-sm d-flex align-items-center gap-2"
+      (click)="openAddChartDialog()">
+      <i class="bi bi-plus-lg"></i>
+      Add Custom Chart
+    </button>
+  </div>
+  <section id="stats" class="mb-4">
+    <app-stats-cards></app-stats-cards>
+  </section>
+  <section id="main-graphs" class="mb-5">
+  </section>
+  <section id="custom-charts">
+  </section>
+</main>

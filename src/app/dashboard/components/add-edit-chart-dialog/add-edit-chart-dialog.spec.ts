@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StatsCards } from './stats-cards';
+import { AddEditChartDialog } from './add-edit-chart-dialog';
 
-describe('StatsCards', () => {
-  let component: StatsCards;
-  let fixture: ComponentFixture<StatsCards>;
+describe('AddEditChartDialog', () => {
+  let component: AddEditChartDialog;
+  let fixture: ComponentFixture<AddEditChartDialog>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [StatsCards]
+      imports: [AddEditChartDialog]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(StatsCards);
+    fixture = TestBed.createComponent(AddEditChartDialog);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

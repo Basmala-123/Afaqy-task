@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CustomChartCard } from './custom-chart-card';
+import { Header } from './header';
 
-describe('CustomChartCard', () => {
-  let component: CustomChartCard;
-  let fixture: ComponentFixture<CustomChartCard>;
+describe('Header', () => {
+  let component: Header;
+  let fixture: ComponentFixture<Header>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CustomChartCard]
+      imports: [Header]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CustomChartCard);
+    fixture = TestBed.createComponent(Header);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

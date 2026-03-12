@@ -1,0 +1,46 @@
+.custom-card {
+    border-radius: 16px;
+    transition: transform 0.2s;
+}
+
+.custom-card:hover {
+    transform: translateY(-5px);
+}
+
+.border-dashed {
+    border: 2px dashed #d1d5db !important;
+    background-color: #f8fafc;
+    border-radius: 16px;
+    cursor: pointer;
+}
+
+.plus-icon {
+    font-size: 2.5rem;
+    color: #94a3b8;
+    line-height: 1;
+}
+
+.fs-xs { font-size: 0.75rem; }
+.fs-xxs { font-size: 0.65rem; }
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 4px;
+}
+
+.chart-center-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .custom-charts-section {
+        padding: 0 10px;
+    }
+}

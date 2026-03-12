@@ -1,4 +1,4 @@
-import { SensorReadings } from './sensor.model';
+// import { SensorReadings } from './sensor.model';
 
 export type RoomStatus = 'online' | 'offline';
 
@@ -9,3 +9,11 @@ export interface Room {
   status:  RoomStatus;
   sensors: SensorReadings;
 }
+
+export interface SensorReadings {
+  temperature?: number;
+  humidity?: number;
+  co2?: number;
+  [key: string]: number | undefined;
+}
+

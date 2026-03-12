@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Header } from './shared/components/header/header';
-import { Sidebar } from './shared/components/sidebar/sidebar';
+import { Sidebar } from './dashboard/components/sidebar/sidebar';
+import { Header } from './dashboard/components/header/header';
 
 @Component({
   selector: 'app-root',

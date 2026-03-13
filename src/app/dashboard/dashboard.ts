@@ -13,6 +13,7 @@ Chart.register(...registerables);
 export class Dashboard implements OnInit, AfterViewInit {
   public dataService = inject(MockDataService);
   private donutChart: Chart | undefined;
+  private lineChart: Chart | undefined;
   constructor() {
     effect(() => {
       const rooms = this.dataService.rooms();
@@ -25,7 +26,6 @@ export class Dashboard implements OnInit, AfterViewInit {
     this.dataService.loadInitialData().subscribe({
       next: () => {
         console.log('Data loaded successfully');
-        // 2. تشغيل محاكي السوكيت (التايمر اللي بيحدث كل ثانيتين)
         // this.dataService.startLiveUpdates();
       },
       error: (err) => console.error('Failed to load data', err)
@@ -35,35 +35,44 @@ export class Dashboard implements OnInit, AfterViewInit {
     this.renderLineChart();
     this.renderDonutChart();
     console.log(this.dataService.customCharts());
-
   }
 
   renderLineChart() {
-    new Chart('tempTrendChart', {
+    this.lineChart = new Chart('tempTrendChart', {
       type: 'line',
       data: {
         labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
         datasets: [{
           label: 'Temperature',
-          data: [20, 22, 25, 24, 28, 26, 27],
+          data: [21, 23, 22, 25, 24, 26, 25],
           borderColor: '#3b82f6',
-          backgroundColor: 'rgba(59, 130, 246, 0.1)',
+          backgroundColor: 'rgba(59, 130, 246, 0.05)',
           fill: true,
-          tension: 0.4, // بتخلي الخط ناعم (Curvy) زي الصورة
-          pointRadius: 4
+          tension: 0.4,
+          pointRadius: 4,
+          pointBackgroundColor: '#fff',
+          pointBorderColor: '#3b82f6',
+          pointBorderWidth: 2
         }]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
         plugins: { legend: { display: false } },
-        scales: { y: { display: false }, x: { grid: { display: false } } }
+        scales: {
+          y: { 
+            display: true, 
+            grid: { color: 'rgba(0,0,0,0.05)' },
+            border: { display: false }
+          },
+          x: { grid: { display: false } }
+        }
       }
     });
   }
 
   renderDonutChart() {
-    new Chart('roomStatusChart', {
+   this.donutChart = new Chart('roomStatusChart', {
       type: 'doughnut',
       data: {
         datasets: [{
@@ -81,8 +90,8 @@ export class Dashboard implements OnInit, AfterViewInit {
   }
 
   updateDonutChart() {
-    const online = this.dataService.rooms().filter(r => r.status === 'online').length;
-    const offline = this.dataService.rooms().filter(r => r.status === 'offline').length;
+    const online = this.dataService.onlineRoomsCount();
+    const offline = this.dataService.offlineRoomsCount();
 
     if (this.donutChart) {
       this.donutChart.data.datasets[0].data = [online, offline];

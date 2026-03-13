@@ -3,11 +3,13 @@ import { ChartRange } from './chart-range.model';
 
 export interface CustomChart {
   id: string;
-  order: number;
   name: string;
+  order: number;
+  totalRooms?:number;
+  ranges: ChartRange[];
   roomIds: string[];
   sensorType: SensorType;
-  ranges: ChartRange[];
+  liveStats:ChartRange[];
 }
 
 export interface ChartCountResult {

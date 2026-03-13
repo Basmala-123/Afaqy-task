@@ -20,8 +20,8 @@ export class MockDataService{
   mappedCustomCharts = computed(() => {
     const allRooms = this.rooms();
     const configs = this.customCharts();
-
-    return configs.map(chart => {
+    const sortedConfigs = [...configs].sort((a, b) => a.order - b.order);
+    return sortedConfigs.map(chart => {
       const targetRooms = allRooms.filter(room => chart.roomIds.includes(room.id) && room.status === 'online');
       const liveStats = chart.ranges.map((range: any) => {
         const count = targetRooms.filter(room => {

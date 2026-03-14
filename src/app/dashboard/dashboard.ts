@@ -3,6 +3,8 @@ import { StatsCards } from './components/stats-cards/stats-cards';
 import { Chart, registerables } from 'chart.js';
 import { CustomChartCard } from './components/custom-chart-card/custom-chart-card';
 import { MockDataService } from '../core/services/mock-data-service';
+import { MatDialog } from '@angular/material/dialog';
+import { AddEditChartDialog } from './components/add-edit-chart-dialog/add-edit-chart-dialog';
 Chart.register(...registerables);
 @Component({
   selector: 'app-dashboard',
@@ -14,6 +16,8 @@ export class Dashboard implements OnInit, AfterViewInit {
   public dataService = inject(MockDataService);
   private donutChart: Chart | undefined;
   private lineChart: Chart | undefined;
+  private dialog = inject(MatDialog);
+
   constructor() {
     effect(() => {
       const rooms = this.dataService.rooms();
@@ -99,7 +103,20 @@ export class Dashboard implements OnInit, AfterViewInit {
     }
   }
 
-  public openAddChartDialog() { }
+    openAddChartDialog() {
+    const dialogRef = this.dialog.open(AddEditChartDialog, {
+      width: '500px',
+      panelClass: 'custom-dialog-container'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        const newChart = { ...result, id: Date.now().toString(), order: this.dataService.customCharts().length + 1 };
+        console.log(newChart); 
+        this.dataService.customCharts.update(prev => [...prev, newChart]);
+      }
+    });
+  }
 
   ngOnDestroy() {
     this.dataService.stopLiveUpdates();

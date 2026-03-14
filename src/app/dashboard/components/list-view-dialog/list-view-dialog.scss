@@ -1,0 +1,44 @@
+.list-view-container {
+  .fs-xxs { font-size: 0.7rem; }
+  .fs-xs { font-size: 0.8rem; }
+
+  .btn-back { border: 1px solid #eee; margin-right: 8px; }
+
+  .badge-live {
+    background: #e6f4ea;
+    color: #1e7e34;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: bold;
+  }
+
+  .search-box {
+    display: flex;
+    align-items: center;
+    background: #f8f9fa;
+    border: 1px solid #eef0f2;
+    border-radius: 8px;
+    padding: 4px 12px;
+    flex-grow: 1;
+    mat-icon { color: #adb5bd; font-size: 20px; width: 20px; height: 20px; }
+    input { border: none; background: transparent; padding: 4px 8px; width: 100%; outline: none; }
+  }
+
+  .custom-table {
+    th { font-size: 0.65rem; padding: 12px 8px; }
+    td { padding: 12px 8px; vertical-align: middle; }
+    mat-icon { vertical-align: middle; }
+  }
+
+  .pill {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    &-cold { background: #e3f2fd; color: #1976d2; }
+    &-normal { background: #e8f5e9; color: #2e7d32; }
+  }
+
+  .btn-export { border-radius: 8px; height: 36px; font-size: 0.8rem; border-color: #eee; }
+}

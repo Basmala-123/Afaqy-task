@@ -1,8 +1,9 @@
 import { AfterViewInit, ChangeDetectorRef, Component, effect, inject, Input } from '@angular/core';
 import { Chart } from 'chart.js';
-import { CustomChart } from '../../../core/models/custom-chart.model';
 import { CdkDragDrop, moveItemInArray,DragDropModule } from '@angular/cdk/drag-drop';
 import { MockDataService } from '../../../core/services/mock-data-service';
+import { AddEditChartDialog } from '../add-edit-chart-dialog/add-edit-chart-dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-custom-chart-card',
@@ -12,6 +13,7 @@ import { MockDataService } from '../../../core/services/mock-data-service';
 })
 export class CustomChartCard implements AfterViewInit{
   private dataService = inject(MockDataService)
+  private dialog = inject(MatDialog);
   constructor() {
     effect(() => {
       const data = this.dataService.mappedCustomCharts();
@@ -24,9 +26,9 @@ export class CustomChartCard implements AfterViewInit{
   public get chartList() {
     return this.dataService.mappedCustomCharts();
   }
+
   ngAfterViewInit() {
     this.updateAllCharts();
-    console.log(this.chartList); 
   }
 
   updateAllCharts() {
@@ -89,5 +91,17 @@ export class CustomChartCard implements AfterViewInit{
   ngOnDestroy() {
     this.destroyAllCharts();
   }
-  onAddChartClick(){}
+    onAddChartClick() {
+    const dialogRef = this.dialog.open(AddEditChartDialog, {
+      width: '500px',
+      panelClass: 'custom-dialog-container'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        const newChart = { ...result, id: Date.now().toString(), order: this.dataService.customCharts().length + 1 };
+        this.dataService.customCharts.update(prev => [...prev, newChart]);
+      }
+    });
+  }
 }

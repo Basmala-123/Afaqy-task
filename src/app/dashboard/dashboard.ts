@@ -5,6 +5,7 @@ import { CustomChartCard } from './components/custom-chart-card/custom-chart-car
 import { MockDataService } from '../core/services/mock-data-service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddEditChartDialog } from './components/add-edit-chart-dialog/add-edit-chart-dialog';
+import { ListViewDialog } from './components/list-view-dialog/list-view-dialog';
 Chart.register(...registerables);
 @Component({
   selector: 'app-dashboard',
@@ -29,8 +30,7 @@ export class Dashboard implements OnInit, AfterViewInit {
   ngOnInit() {
     this.dataService.loadInitialData().subscribe({
       next: () => {
-        console.log('Data loaded successfully');
-        // this.dataService.startLiveUpdates();
+        this.dataService.startLiveUpdates();
       },
       error: (err) => console.error('Failed to load data', err)
     });
@@ -38,7 +38,6 @@ export class Dashboard implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.renderLineChart();
     this.renderDonutChart();
-    console.log(this.dataService.customCharts());
   }
 
   renderLineChart() {
@@ -105,14 +104,13 @@ export class Dashboard implements OnInit, AfterViewInit {
 
     openAddChartDialog() {
     const dialogRef = this.dialog.open(AddEditChartDialog, {
-      width: '500px',
+      width: '800px',
       panelClass: 'custom-dialog-container'
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         const newChart = { ...result, id: Date.now().toString(), order: this.dataService.customCharts().length + 1 };
-        console.log(newChart); 
         this.dataService.customCharts.update(prev => [...prev, newChart]);
       }
     });

@@ -1,1 +1,98 @@
-<p>add-edit-chart-dialog works!</p>
+<div class="dialog-wrapper">
+    @if(viewMode === 'form'){
+        <div mat-dialog-title class="d-flex justify-content-between align-items-center border-0 mb-0">
+          <h5 class="fw-bold text-dark m-0">Add Custom Chart</h5>
+          <button type="button" class="btn-close fs-xs" (click)="onCancel()"></button>
+        </div>
+      
+        <mat-dialog-content class="pt-3">
+          <form [formGroup]="chartForm">
+            <div class="mb-3">
+              <label class="form-label fs-xs fw-bold text-muted">Chart Name <span class="text-danger">*</span></label>
+              <input type="text" formControlName="name" class="form-control rounded-3 shadow-none" placeholder="e.g., Temperature Zones">
+              <small class="text-muted fs-xxs">Must be unique across your charts.</small>
+            </div>
+      
+            <div class="mb-3">
+              <label class="form-label fs-xs fw-bold text-muted">Rooms <span class="text-danger">*</span></label>
+              <mat-form-field appearance="outline" class="w-100 custom-mat-field">
+                <mat-select formControlName="roomIds" multiple placeholder="Select rooms...">
+                  @for (room of dataService.rooms(); track room.id) {
+                    <mat-option [value]="room.id">{{ room.name }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+              <small class="text-muted fs-xxs">Only rooms with sensors are shown.</small>
+            </div>
+      
+            <div class="mb-4">
+              <label class="form-label fs-xs fw-bold text-muted">Sensor Type <span class="text-danger">*</span></label>
+              <select formControlName="sensorType" class="form-select rounded-3 shadow-none">
+                <option value="" disabled selected>Select sensor...</option>
+                <option value="temperature">Temperature</option>
+                <option value="humidity">Humidity</option>
+                <option value="co2">CO2</option>
+              </select>
+            </div>
+      
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <label class="form-label fs-xs fw-bold text-muted mb-0">Value Ranges <span class="text-danger">*</span></label>
+              <small class="text-muted fs-xxs italic">Ranges must not overlap</small>
+            </div>
+      
+            <div class="table-responsive bg-light rounded-3 p-2 mb-3 border">
+              <table class="table table-borderless align-middle mb-0">
+                <thead>
+                  <tr class="fs-xxs text-uppercase text-muted">
+                    <th class="ps-2">Range Name</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th class="text-center">Colour</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody formArrayName="ranges">
+                  @for (range of ranges.controls; track $index; let i = $index) {
+                    <tr [formGroupName]="i">
+                      <td><input type="text" formControlName="name" class="form-control form-control-sm border-0 bg-white"></td>
+                      <td style="width: 70px;"><input type="number" formControlName="from" class="form-control form-control-sm border-0 bg-white text-center"></td>
+                      <td style="width: 70px;"><input type="number" formControlName="to" class="form-control form-control-sm border-0 bg-white text-center"></td>
+                      <td style="width: 50px;" class="text-center">
+                        <input type="color" formControlName="color" class="form-control-color border-0 bg-transparent p-0">
+                      </td>
+                      <td class="text-end">
+                        <button type="button" class="btn btn-link text-danger p-0 border-0" (click)="removeRange(i)">
+                          <span class="fs-4">&times;</span>
+                        </button>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+              <button type="button" class="btn btn-link btn-sm text-primary text-decoration-none fw-bold p-1 mt-1" (click)="addRange()">
+                + Add Range
+              </button>
+            </div>
+      
+            @if (chartForm.errors?.['overlap']) {
+              <div class="alert alert-warning border-0 p-2 d-flex align-items-start gap-2 rounded-3">
+                <small class="fs-xxs text-dark">⚠️ Range names must be unique and intervals must not overlap.</small>
+              </div>
+            }
+          </form>
+        </mat-dialog-content>
+      
+        <mat-dialog-actions align="end" class="border-0 p-3 pt-0">
+          <button mat-button class="rounded-3 px-4 text-muted fw-bold" (click)="onCancel()">Cancel</button>
+          <button mat-raised-button color="primary" class="rounded-3 px-4 fw-bold" (click)="onSave()" [disabled]="chartForm.invalid">
+            Save Chart
+          </button>
+        </mat-dialog-actions>
+    }@else {
+    <app-list-view-dialog [chartId]="newChartId"></app-list-view-dialog>
+    
+    <mat-dialog-actions align="end">
+      <button mat-button (click)="onCancel()">Close</button>
+    </mat-dialog-actions>
+  }
+</div>

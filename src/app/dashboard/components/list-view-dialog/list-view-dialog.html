@@ -1,0 +1,51 @@
+<div class="list-view-wrapper">
+  @if (currentChart(); as chart) {
+    <div class="p-3">
+      <h5 class="fw-bold mb-0">{{ chart.name }} — List View</h5>
+      <small class="text-muted fs-xxs">Sensor: {{ chart.sensorType }} · {{ chart.totalRooms }} rooms tracked</small>
+    </div>
+
+    <div class="table-responsive px-3">
+      <table class="table align-middle custom-table">
+        <thead>
+          <tr class="text-muted fs-xxs">
+            <th>ROOM</th>
+            <th>CURRENT READING</th>
+            <th>RANGE</th>
+            <th>STATUS</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (room of roomDetails(); track room.name) {
+            <tr>
+              <td class="fw-bold"><mat-icon class="fs-5 v-middle">home</mat-icon> {{ room.name }}</td>
+              <td>
+                <span class="fw-bold">{{ room.value }} {{ room.unit }}</span>
+              </td>
+              <td>
+                <span class="range-pill" 
+                      [style.background-color]="room.rangeColor + '20'" 
+                      [style.color]="room.rangeColor">
+                  ● {{ room.rangeName }}
+                </span>
+              </td>
+              <td>
+                <span [class]="room.status === 'online' ? 'text-success' : 'text-danger'">
+                  {{ room.status }}
+                </span>
+              </td>
+              <td><button class="btn btn-details">Details</button></td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <div class="d-flex gap-3 p-3 border-top fs-xxs fw-bold">
+      @for (stat of chart.liveStats; track stat.name) {
+        <span [style.color]="stat.color">● {{ stat.name }}: {{ stat.count }}</span>
+      }
+    </div>
+  }
+</div>

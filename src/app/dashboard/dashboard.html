@@ -77,6 +77,13 @@
     </div>
   </section>
   <section id="custom-charts">
+    @if (dataService.mappedCustomCharts().length > 0) {
     <app-custom-chart-card ></app-custom-chart-card>
+    } @else {
+    <div class="text-center p-5">
+      <div class="spinner-border text-primary" role="status"></div>
+    </div>
+    }
+
   </section>
 </main>
